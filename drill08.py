@@ -26,6 +26,16 @@ class Boy:
     def draw(self):
         self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
 
+class Bolls:
+    def __init__(self):
+        self.x, self.y = random.randint(0, 800), 599
+        self.image = load_image(random.choice(['ball21x21.png', 'ball41x41.png']))
+
+    def update(self):
+        self.y -= random.randint(1, 20)
+
+    def draw(self):
+        self.image.draw(self.x, self.y)
 
 def handle_events():
     global running
@@ -42,27 +52,24 @@ def reset_world():
     global grass
     global team
     global world
-    # 이 코드의 장점은 update wolrd 와 render world를 건드릴 필요 없이
-    # 이제 클래스만을 wolrd 만을 고쳐서 사용할 수 있다.
-    # global boy
+    global bolls
 
     running = True
     world = []
+    bolls = []
 
     grass = Grass()
     world.append(grass)
-    # boy = Boy()
+
 
     team = [Boy() for i in range(11)]
+    bolls =[Bolls() for i in range(20)]
+
     world += team
+    world += bolls
 
 
 def update_world():
-    # grass.update()
-    # # boy.update()
-    # for boy in team:
-    #     boy.update()
-    # pass
 
     for o in world:
         o.update()
@@ -70,27 +77,21 @@ def update_world():
 
 def render_world():
     clear_canvas()
-    # grass.draw()
-    # # boy.draw()
-    # for boy in team:
-    #     boy.draw()
     for o in world:
         o.draw()
-
     update_canvas()
 
 
 open_canvas()
-# initialization code 초기화 코드
+
 reset_world()
 
-# game main loop code
+
 while running:
     handle_events()
     update_world()  # game logic
     render_world()  # draw game world
     delay(0.05)
 
-# finalization code
 
 close_canvas()
