@@ -2,7 +2,6 @@ from pico2d import *
 import random
 
 
-# Game object class here
 class Grass:
     def __init__(self):
         self.image = load_image('grass.png')
@@ -26,6 +25,7 @@ class Boy:
     def draw(self):
         self.image.clip_draw(self.frame * 100, 0, 100, 100, self.x, self.y)
 
+
 class Bolls:
     def __init__(self):
         self.x, self.y = random.randint(0, 800), 599
@@ -33,17 +33,16 @@ class Bolls:
         self.image = load_image(self.image_filename)
 
     def update(self):
-        if(self.y >70):
+        if self.y > 70:
             self.y -= random.randint(1, 30)
         else:
-            if(self.image_filename == 'ball21x21.png'):
+            if self.image_filename == 'ball21x21.png':
                 self.y = 60
             else:
                 self.y = 70
 
     def draw(self):
         self.image.draw(self.x, self.y)
-
 
 
 def handle_events():
@@ -59,9 +58,8 @@ def handle_events():
 def reset_world():
     global running
     global grass
-    global team
+    global team, bolls
     global world
-    global bolls
 
     running = True
     world = []
@@ -70,16 +68,14 @@ def reset_world():
     grass = Grass()
     world.append(grass)
 
-
     team = [Boy() for i in range(11)]
-    bolls =[Bolls() for i in range(20)]
+    bolls = [Bolls() for i in range(20)]
 
     world += team
     world += bolls
 
 
 def update_world():
-
     for o in world:
         o.update()
 
@@ -95,12 +91,10 @@ open_canvas()
 
 reset_world()
 
-
 while running:
     handle_events()
     update_world()  # game logic
     render_world()  # draw game world
     delay(0.05)
-
 
 close_canvas()
