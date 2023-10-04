@@ -32,10 +32,15 @@ class Bolls:
         self.image = load_image(random.choice(['ball21x21.png', 'ball41x41.png']))
 
     def update(self):
-        self.y -= random.randint(1, 20)
+        if(self.y >70):
+            self.y -= random.randint(1, 30)
+        else:
+            self.y = 70
 
     def draw(self):
         self.image.draw(self.x, self.y)
+
+
 
 def handle_events():
     global running
