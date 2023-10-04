@@ -29,13 +29,17 @@ class Boy:
 class Bolls:
     def __init__(self):
         self.x, self.y = random.randint(0, 800), 599
-        self.image = load_image(random.choice(['ball21x21.png', 'ball41x41.png']))
+        self.image_filename = random.choice(['ball21x21.png', 'ball41x41.png'])
+        self.image = load_image(self.image_filename)
 
     def update(self):
         if(self.y >70):
             self.y -= random.randint(1, 30)
         else:
-            self.y = 70
+            if(self.image_filename == 'ball21x21.png'):
+                self.y = 60
+            else:
+                self.y = 70
 
     def draw(self):
         self.image.draw(self.x, self.y)
